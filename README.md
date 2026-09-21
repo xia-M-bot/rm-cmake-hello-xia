@@ -13,3 +13,5 @@ cmake --build build
 
 ## 运行结果截图
 ![编译运行成功截图](images/success.png)
+
+This project is built on Ubuntu 22.04 with CMake and C++
