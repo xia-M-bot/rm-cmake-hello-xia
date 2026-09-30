@@ -69,7 +69,6 @@ Testing/
 .cache/
 
 build/
-*.mp4
 *.png
 *.jpg
 .DS_Store

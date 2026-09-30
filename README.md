@@ -106,15 +106,19 @@ findContours 检测掩码中的外轮廓，通过图像矩 moments 计算标记�
 scipy.optimize.curve_fit 拟合，求解参数
 
 ## 实验结果
-A = 0.2169 rad
-Ω = 1.9456 rad/s
-φ = 1.8562 rad
-b = 3.0981 rad
-角度RMSE = 1.8040 rad
-有效样本数量：1440
-帧范围:0 ~ 1439
+- A = 0.549943585 rad/s
+- b = 1.350026230 rad/s
+- Omega = 1.649870236 rad/s
+- phi = 0.702897260 rad
+- theta0 = 0.350314776 rad
+- T = 2*pi/Omega = 3.808290599 s
+## Errors
+- valid angle samples = 1440
+- angle RMSE = 0.002342272 rad
 # 参数估计说明
 采用非线性最小二乘优化方法 `scipy.optimize.curve_fit` 进行参数估计。
+omega(t) = b + A*sin(Omega*t + phi)
+theta(t) = theta0 + b*t + (A/Omega)*(cos(phi) - cos(Omega*t + phi))
 - **优化方法**：Levenberg-Marquardt（LM）算法
 - **模型**：$\theta(t)=A\cos(\Omega t+\varphi)+b$
 - **约束**：振幅 $A>0$，角频率 $\Omega>0$；初相位、基线偏移无硬性边界约束
