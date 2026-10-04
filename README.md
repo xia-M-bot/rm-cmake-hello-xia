@@ -40,13 +40,13 @@ ros2 topic echo /image_raw
 ```
 
 ## 图片
-![真实-topic](images/actual/ros2 topic hz.png)
+![真实-topic](images/actual/topic-hz.png)
 
 ![真实-rqt](images/actual/rqt-image-view.png)
 
 ![真实-终端](images/actual/terminal.png)
 
-![仿真-topic](images/simulation/ros2 topic echo.png)
+![仿真-topic](images/simulation/topic-echo.png)
 
 ![仿真-rqt](images/simulation/rqt-graph.png)
 
