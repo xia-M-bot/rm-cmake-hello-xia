@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 ## 第四次培训
 # 文件结构
+```bash
 .rm_yolo_project
 ├── all_data
 │   ├── images
@@ -37,6 +38,7 @@
 └── 第四次培训.odt
 rm_yolo_project/rm_dataset/images/train/images为原文件中unlabeled中的文件
 rm_yolo_project/rm_dataset/labels/train/labels为上面文件的对应txt文件
+```
 =======
 # hik_camera：海康MVS SDK ROS2 Humble功能包
 ## 功能
