@@ -1,0 +1,10 @@
+build/
+install/
+log/
+dataset/images/
+dataset/labels/
+train_result/weights/
+*.pt
+*.pth
+__pycache__/
+*.pyc

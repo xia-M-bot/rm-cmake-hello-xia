@@ -1,0 +1,6 @@
+path: /mnt/e_disk/rm_yolo_project/rm_dataset
+train: images/train
+val: images/val
+
+names:
+ 0: armor
