@@ -1,0 +1,7 @@
+camera_node:
+  ros__parameters:
+    use_sim_time: true
+    use_simulation: true
+    image_width: 640
+    image_height: 480
+    publish_fps: 30.0

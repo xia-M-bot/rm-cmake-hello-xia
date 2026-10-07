@@ -1,6 +1,7 @@
 build/
 install/
 log/
+<<<<<<< HEAD
 dataset/images/
 dataset/labels/
 train_result/weights/
@@ -8,3 +9,6 @@ train_result/weights/
 *.pth
 __pycache__/
 *.pyc
+=======
+.vscode/
+>>>>>>> bf87e95aeb941f6faf2b412830aba1fd925e9cad
