@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://c3fb036bbmahh"]
+
+[ext_resource type="Script" uid="uid://cog6elqtumal2" path="res://scripts/Infantry.gd" id="1_v0cct"]
+[ext_resource type="PackedScene" uid="uid://bujvq22yfxe44" path="res://scenes/Bullet.tscn" id="2_jxpuk"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_t5v22"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_t5v22"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_t5v22"]
+size = Vector3(0.05, 0.05, 1)
+
+[node name="Player" type="CharacterBody3D" unique_id=256437464]
+script = ExtResource("1_v0cct")
+bullet_scene = ExtResource("2_jxpuk")
+
+[node name="ChassisMesh" type="MeshInstance3D" parent="." unique_id=1527954448]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_t5v22")
+
+[node name="ChassisCollision" type="CollisionShape3D" parent="." unique_id=227358526]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_t5v22")
+
+[node name="GimbalYaw" type="Node3D" parent="." unique_id=1010560415]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+
+[node name="GimbalPitch" type="Node3D" parent="GimbalYaw" unique_id=1477727104]
+
+[node name="Camera3D" type="Camera3D" parent="GimbalYaw/GimbalPitch" unique_id=150876622]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.2)
+current = true
+
+[node name="Muzzle" type="Node3D" parent="GimbalYaw/GimbalPitch" unique_id=2141861101]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.9)
+
+[node name="Muzzle2" type="MeshInstance3D" parent="GimbalYaw/GimbalPitch" unique_id=645137836]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.75)
+mesh = SubResource("BoxMesh_t5v22")
+
+[node name="FireTimer" type="Timer" parent="." unique_id=87825646]
+wait_time = 0.5
