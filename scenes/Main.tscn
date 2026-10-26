@@ -1,10 +1,13 @@
 [gd_scene format=3 uid="uid://ckc7c7q13q3yx"]
 
+[ext_resource type="Script" uid="uid://f5x500xwt3eh" path="res://scripts/match_state.gd" id="1_c01mt"]
 [ext_resource type="PackedScene" uid="uid://c3fb036bbmahh" path="res://scenes/Infantry.tscn" id="1_elqb8"]
 [ext_resource type="Script" uid="uid://bhedx7mf8syht" path="res://scripts/hud.gd" id="2_rvslj"]
 [ext_resource type="Script" uid="uid://bteeofl7ibyg7" path="res://scripts/target.gd" id="3_0bbpv"]
 [ext_resource type="Script" uid="uid://d3d4vrqox7413" path="res://scripts/tcp_sender.gd" id="4_rarhs"]
 [ext_resource type="Script" uid="uid://bnygtssxsy7ti" path="res://scripts/armor_front.gd" id="6_c01mt"]
+[ext_resource type="Script" uid="uid://bpm86p2t663v2" path="res://scripts/base.gd" id="7_nxtc6"]
+[ext_resource type="Script" uid="uid://cvexq1fcqucsw" path="res://scripts/supply_zone.gd" id="8_jlsqs"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_t5v22"]
 size = Vector3(20, 0.5, 20)
@@ -54,16 +57,41 @@ font_names = PackedStringArray("Noto Sans CJK SC")
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_28xow"]
 bg_color = Color(0, 0, 0, 1)
 
+[sub_resource type="SystemFont" id="SystemFont_nxtc6"]
+font_names = PackedStringArray("Noto Sans CJK SC")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_130v7"]
+bg_color = Color(0, 0, 0, 1)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_nxtc6"]
-size = Vector3(3, 3, 3)
+size = Vector3(0.1, 3, 3)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c01mt"]
 albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_jlsqs"]
-size = Vector3(3, 3, 3)
+size = Vector3(0.1, 3, 3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nxtc6"]
+albedo_color = Color(0.22900683, 0.4819163, 0.2068285, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_c01mt"]
+size = Vector3(4, 4, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jlsqs"]
+size = Vector3(4, 4, 4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0l2dm"]
+albedo_color = Color(0.37520233, 1.5084606, 0.56117296, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_130v7"]
+size = Vector3(5, 0.1, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_28xow"]
+size = Vector3(5, 0.1, 5)
 
 [node name="Main" type="Node3D" unique_id=1046261236]
+script = ExtResource("1_c01mt")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=637431327]
 transform = Transform3D(0.34342644, 0.14054096, -0.92860466, -0.10270284, 0.9884305, 0.11161275, 0.93354726, 0.057039578, 0.35388714, 0, 4.7946706, 0)
@@ -71,7 +99,7 @@ light_energy = 2.0
 shadow_enabled = true
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1426925977]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0.3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.3)
 current = true
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1631760778]
@@ -144,6 +172,7 @@ offset_right = 50.0
 offset_bottom = 60.0
 theme_override_styles/background = SubResource("StyleBoxFlat_rarhs")
 theme_override_styles/fill = SubResource("StyleBoxFlat_0bbpv")
+value = 100.0
 show_percentage = false
 
 [node name="HeatBar" type="ProgressBar" parent="HUD/HudRoot/RightPanel" unique_id=1891861015]
@@ -188,6 +217,16 @@ offset_bottom = 169.0
 theme_override_fonts/font = SubResource("SystemFont_0l2dm")
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_28xow")
+
+[node name="BaseHPLabel" type="Label" parent="HUD/HudRoot/RightPanel" unique_id=136765284]
+layout_mode = 1
+offset_left = -1100.0
+offset_right = -1000.0
+offset_bottom = 30.0
+theme_override_fonts/font = SubResource("SystemFont_nxtc6")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_130v7")
+text = "基地：--"
 
 [node name="TopClockLabel" type="Label" parent="HUD/HudRoot" unique_id=336465108]
 layout_mode = 1
@@ -254,24 +293,52 @@ script = ExtResource("3_0bbpv")
 
 [node name="MatchState" type="Node3D" parent="." unique_id=207036811]
 
-[node name="TcpSender" type="Node" parent="." unique_id=1218773659 node_paths=PackedStringArray("infantry", "viewport")]
+[node name="TcpSender" type="Node" parent="." unique_id=1218773659 node_paths=PackedStringArray("infantry")]
 script = ExtResource("4_rarhs")
 infantry = NodePath("../Player")
-viewport = NodePath("../HUD/SubViewportContainer/CaptureViewport")
 
 [node name="ArmorFront" type="Area3D" parent="." unique_id=241173239]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6866057, 0, 0)
 collision_layer = 4
+collision_mask = 0
 script = ExtResource("6_c01mt")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ArmorFront" unique_id=67575362]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2, 0)
 shape = SubResource("BoxShape3D_nxtc6")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ArmorFront" unique_id=812043309]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9999998, 2, 0)
 material_override = SubResource("StandardMaterial3D_c01mt")
 mesh = SubResource("BoxMesh_jlsqs")
+
+[node name="Base" type="Node3D" parent="." unique_id=222215929]
+script = ExtResource("7_nxtc6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Base" unique_id=1083515667]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -6.24)
+material_override = SubResource("StandardMaterial3D_nxtc6")
+mesh = SubResource("BoxMesh_c01mt")
+
+[node name="BaseArea" type="Area3D" parent="Base" unique_id=1976078670]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Base/BaseArea" unique_id=774467488]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -6.24)
+shape = SubResource("BoxShape3D_jlsqs")
+
+[node name="SupplyZone" type="Area3D" parent="." unique_id=590906829]
+script = ExtResource("8_jlsqs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SupplyZone" unique_id=1261731338]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 0.3, 7.5)
+material_override = SubResource("StandardMaterial3D_0l2dm")
+mesh = SubResource("BoxMesh_130v7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SupplyZone" unique_id=1656024787]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 0.3, 7.5)
+shape = SubResource("BoxShape3D_28xow")
 
 [connection signal="timeout" from="HUD/HudRoot/Timer" to="HUD" method="_on_tip_timer_timeout"]
 [connection signal="body_entered" from="ArmorFront" to="Player" method="_on_armor_front_body_entered"]
