@@ -2,45 +2,52 @@ extends Node
 
 @export var img_port: int = 9000
 @export var state_port: int = 9001
-@export var viewport: SubViewport
 @export var infantry: Node3D
+@export var viewport: SubViewport
 
-var img_tcp: StreamPeerTCP
+var img_socket: StreamPeerTCP
 var state_tcp: StreamPeerTCP
-var send_timer: Timer
+var send_timer: float = 0.0
 
 
 func _ready():
-	print("==== TcpSender 开始执行 ====")
-	img_tcp = StreamPeerTCP.new()
+	img_socket = StreamPeerTCP.new()
 	state_tcp = StreamPeerTCP.new()
-
-	var ret1 = img_tcp.connect_to_host("127.0.0.1", img_port)
-	var ret2 = state_tcp.connect_to_host("127.0.0.1", state_port)
-	print("图像连接返回：", ret1)
-	print("状态连接返回：", ret2)
-
-	send_timer = Timer.new()
-	send_timer.wait_time = 0.05
-	send_timer.autostart = true
-	send_timer.timeout.connect(_send_data)
-	add_child(send_timer)
+	img_socket.connect_to_host("127.0.0.1", img_port)
+	state_tcp.connect_to_host("127.0.0.1", state_port)
+	print("=== TcpSender 开始执行 ===")
 
 
-func _send_data():
-	# 先检查有没有连上
-	if img_tcp.get_status() != StreamPeerTCP.STATUS_CONNECTED:
+func _process(delta):
+	send_timer += delta
+	if send_timer < 0.1:
 		return
-	if state_tcp.get_status() != StreamPeerTCP.STATUS_CONNECTED:
-		return
+	send_timer = 0.0
 
-	# 发送状态文本
-	var info = "hp:%f,ammo:%d" % [infantry.hp, infantry.ammo]
-	state_tcp.put_data(info.to_utf8_buffer())
+	img_socket.poll()
+	state_tcp.poll()
 
-	# 截图发给python
-	var img: Image = viewport.get_texture().get_image()
-	img.convert(Image.FORMAT_RGB8)
-	var buf: PackedByteArray = img.save_to_buffer("png")
-	img_tcp.put_32(buf.size())
-	img_tcp.put_data(buf)
+	# 发送状态（这个你已经跑通了，保留）
+	if state_tcp.get_status() == StreamPeerTCP.STATUS_CONNECTED:
+		var info = "hp:%d,ammo:%d\n" % [infantry.hp, infantry.ammo]
+		state_tcp.put_data(info.to_utf8_buffer())
+		print("发送状态：", info)
+
+	# 发送图像
+	if img_socket.get_status() == StreamPeerTCP.STATUS_CONNECTED:
+		var tex = viewport.get_texture()
+		if tex == null:
+			print("tex为空")
+			return
+		var img = tex.get_image()
+		if img == null:
+			print("img为空")
+			return
+		print("图片 w=", img.get_width(), " h=", img.get_height())
+		# 先测试：保存图片到项目目录，验证能不能拿到画面！
+		img.save_png("test_capture.png")
+		var png_data = img.save_to_buffer()
+		print("图片字节长度：", png_data.len())
+		var len_bytes = png_data.len().to_bytes(4, true)
+		img_socket.put_data(len_bytes)
+		img_socket.put_data(png_data)

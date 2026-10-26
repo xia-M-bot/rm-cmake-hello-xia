@@ -54,12 +54,6 @@ font_names = PackedStringArray("Noto Sans CJK SC")
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_28xow"]
 bg_color = Color(0, 0, 0, 1)
 
-[sub_resource type="SystemFont" id="SystemFont_rarhs"]
-font_names = PackedStringArray("Noto Sans CJK SC")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c01mt"]
-bg_color = Color(0, 0, 0, 1)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_nxtc6"]
 size = Vector3(3, 3, 3)
 
@@ -103,15 +97,15 @@ offset_bottom = 40.0
 
 [node name="TipLabel" type="Label" parent="HUD/HudRoot" unique_id=2117578559]
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -20.0
-offset_top = -40.0
-offset_right = -19.0
-offset_bottom = -10.0
+offset_left = 400.0
+offset_top = 560.0
+offset_right = 700.0
+offset_bottom = 600.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_fonts/font = SubResource("SystemFont_hsaw2")
@@ -131,63 +125,69 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_t5v22")
 
 [node name="HpLabel" type="Label" parent="HUD/HudRoot/RightPanel" unique_id=1714115732]
 layout_mode = 1
-offset_right = 40.0
-offset_bottom = 23.0
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -100.0
+offset_bottom = 30.0
+grow_horizontal = 0
 theme_override_fonts/font = SubResource("SystemFont_tb6yr")
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_xkcju")
 
 [node name="HpBar" type="ProgressBar" parent="HUD/HudRoot/RightPanel" unique_id=2047931232]
-layout_mode = 0
-offset_top = 27.0
-offset_right = 40.0
-offset_bottom = 50.0
+layout_mode = 1
+anchors_preset = -1
+offset_left = -50.0
+offset_top = 30.0
+offset_right = 50.0
+offset_bottom = 60.0
 theme_override_styles/background = SubResource("StyleBoxFlat_rarhs")
 theme_override_styles/fill = SubResource("StyleBoxFlat_0bbpv")
 show_percentage = false
 
 [node name="HeatBar" type="ProgressBar" parent="HUD/HudRoot/RightPanel" unique_id=1891861015]
-layout_mode = 0
-offset_top = 54.0
-offset_right = 40.0
-offset_bottom = 81.0
+layout_mode = 1
+anchors_preset = -1
+offset_left = -50.0
+offset_top = 60.0
+offset_right = 50.0
+offset_bottom = 90.0
 theme_override_styles/fill = SubResource("StyleBoxFlat_vcsgt")
 show_percentage = false
 
 [node name="HeatLabel" type="Label" parent="HUD/HudRoot/RightPanel" unique_id=1225663897]
-layout_mode = 0
-offset_top = 85.0
-offset_right = 40.0
-offset_bottom = 108.0
+layout_mode = 1
+anchors_preset = -1
+offset_left = -50.0
+offset_top = 90.0
+offset_right = 50.0
+offset_bottom = 120.0
 theme_override_fonts/font = SubResource("SystemFont_r5do3")
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_qlykw")
 
 [node name="AmmoLabel" type="Label" parent="HUD/HudRoot/RightPanel" unique_id=1071897867]
-layout_mode = 0
-offset_top = 112.0
-offset_right = 40.0
-offset_bottom = 135.0
+layout_mode = 1
+anchors_preset = -1
+offset_left = -50.0
+offset_top = 120.0
+offset_right = 50.0
+offset_bottom = 150.0
 theme_override_fonts/font = SubResource("SystemFont_icjbo")
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_ijmop")
 
 [node name="HitsLabel" type="Label" parent="HUD/HudRoot/RightPanel" unique_id=1323292617]
-layout_mode = 0
-offset_top = 139.0
-offset_right = 40.0
-offset_bottom = 162.0
+layout_mode = 1
+anchors_preset = -1
+offset_left = -50.0
+offset_top = 150.0
+offset_right = 50.0
+offset_bottom = 169.0
 theme_override_fonts/font = SubResource("SystemFont_0l2dm")
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_28xow")
-
-[node name="GroupLabel" type="Label" parent="HUD/HudRoot" unique_id=718994615]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 30.0
-theme_override_fonts/font = SubResource("SystemFont_rarhs")
-theme_override_font_sizes/font_size = 20
-theme_override_styles/normal = SubResource("StyleBoxFlat_c01mt")
 
 [node name="TopClockLabel" type="Label" parent="HUD/HudRoot" unique_id=336465108]
 layout_mode = 1
@@ -201,29 +201,20 @@ grow_horizontal = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 30
 
-[node name="Minimap" type="Control" parent="HUD/HudRoot" unique_id=2086644079]
+[node name="MinimapBg" type="ColorRect" parent="HUD/HudRoot" unique_id=3030873]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -40.0
-offset_right = 40.0
+offset_left = 2.0
+offset_top = 406.0
+offset_right = 202.0
+offset_bottom = 606.0
 grow_vertical = 0
+color = Color(0.25021347, 0.25021344, 0.25021344, 1)
 
-[node name="MinimapBg" type="TextureRect" parent="HUD/HudRoot/Minimap" unique_id=168637875]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-grow_vertical = 0
-
-[node name="PlayerIcon" type="TextureRect" parent="HUD/HudRoot/Minimap" unique_id=828409990]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Timer" type="Timer" parent="HUD/HudRoot" unique_id=1589460397]
+one_shot = true
 
 [node name="Crosshair" type="Label" parent="HUD" unique_id=133271072]
 anchors_preset = 15
@@ -236,6 +227,26 @@ text = "+"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="SubViewportContainer" type="SubViewportContainer" parent="HUD" unique_id=2139422236]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = -204.0
+offset_right = 202.0
+offset_bottom = -4.0
+grow_vertical = 0
+stretch = true
+
+[node name="CaptureViewport" type="SubViewport" parent="HUD/SubViewportContainer" unique_id=1829210108]
+handle_input_locally = false
+size = Vector2i(200, 200)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="HUD/SubViewportContainer/CaptureViewport" unique_id=739339173]
+transform = Transform3D(1, 0, 0, 0, 0.008041536, 0.99996763, 0, -0.99996763, 0.008041536, 0, 10, 0)
+current = true
+
 [node name="Target" type="Area3D" parent="." unique_id=1659791400]
 script = ExtResource("3_0bbpv")
 
@@ -243,16 +254,10 @@ script = ExtResource("3_0bbpv")
 
 [node name="MatchState" type="Node3D" parent="." unique_id=207036811]
 
-[node name="CaptureViewport" type="SubViewport" parent="." unique_id=1829210108]
-size = Vector2i(640, 480)
-render_target_update_mode = 4
-
-[node name="Camera3D" type="Camera3D" parent="CaptureViewport" unique_id=739339173]
-
-[node name="TcpSender" type="Node" parent="." unique_id=1218773659 node_paths=PackedStringArray("viewport", "infantry")]
+[node name="TcpSender" type="Node" parent="." unique_id=1218773659 node_paths=PackedStringArray("infantry", "viewport")]
 script = ExtResource("4_rarhs")
-viewport = NodePath("../CaptureViewport")
 infantry = NodePath("../Player")
+viewport = NodePath("../HUD/SubViewportContainer/CaptureViewport")
 
 [node name="ArmorFront" type="Area3D" parent="." unique_id=241173239]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6866057, 0, 0)
@@ -268,4 +273,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1, 0)
 material_override = SubResource("StandardMaterial3D_c01mt")
 mesh = SubResource("BoxMesh_jlsqs")
 
+[connection signal="timeout" from="HUD/HudRoot/Timer" to="HUD" method="_on_tip_timer_timeout"]
 [connection signal="body_entered" from="ArmorFront" to="Player" method="_on_armor_front_body_entered"]

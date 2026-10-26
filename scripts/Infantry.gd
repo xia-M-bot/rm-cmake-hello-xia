@@ -4,11 +4,13 @@ extends CharacterBody3D
 @export var look_sensitivity: float = 0.002
 @export var bullet_scene: PackedScene
 @export var shoot_spawn: Node3D
+@onready var hud = $"../HUD"
 
-var hp: float = 100.0
+@export var hp: int = 100.0
+var max_hp: int = 100
 var ammo: int = 30
-var heat = 0
-var hits = 0
+var heat: int = 0
+var hits: int = 0
 var yaw: float = 0.0
 var pitch: float = 0.0
 const pitch_limit_min: float = -PI/2 + 0.1
@@ -50,6 +52,7 @@ func shoot():
 		print("实例化bullet失败！bullet场景内部有错误")
 		return
 	bullet.global_transform = muzzle.global_transform
+	bullet.hit_tip.connect(hud.show_tip)
 	get_parent().add_child(bullet)
 	if ammo <= 0:
 		return
@@ -83,3 +86,11 @@ func reset():
 	var hud = get_node("/root/Main/HUD")
 	hud.time_left = 60.0
 	hud.timer_running = true
+
+
+func _on_tip_timer_timeout() -> void:
+	pass # Replace with function body.
+
+
+func _on_timer_timeout() -> void:
+	pass # Replace with function body.
