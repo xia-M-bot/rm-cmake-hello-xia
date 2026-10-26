@@ -72,6 +72,7 @@ func _ready():
 	var base = get_node("../Base")
 	base.base_hp_changed.connect(_on_base_hp_changed)
 	base.base_destroyed.connect(_on_base_destroyed)
+	$"../ArmorFront".armor_hp_changed.connect(_on_armor_hp_changed)
 
 func _on_base_hp_changed(hp: int):
 	print("HUD收到基地血量：",hp)
@@ -84,3 +85,6 @@ func _on_time_changed(seconds: int):
 	var m = seconds / 60
 	var s = seconds % 60
 	clock_label.text = "%02d:%02d"%[m,s]
+
+func _on_armor_hp_changed(hp: int):
+	$HudRoot/RightPanel/ArmorHpLabel.text = "装甲:%d" % hp

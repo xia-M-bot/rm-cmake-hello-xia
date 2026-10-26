@@ -7,13 +7,20 @@ signal hit_tip(msg: String)
 
 func _ready():
 	linear_velocity = global_transform.basis.z * -speed
+	body_entered.connect(_on_collision)
 
-func _on_body_entered(body: Node3D):
+func _on_collision(body):
 	var tip_msg = " "
 	if body.name == "ArmorFront":
 		tip_msg = "击中装甲！"
 		body.take_damage(damage)
+		get_node("../Player").hits += 1
+	elif body.name == "BaseArea":
+		tip_msg = "击中基地！"
+		body.get_parent().take_damage(10)
+		get_node("../Player").hits += 1
 	else:
 		tip_msg = "子弹碰到了： %s" % body.name
+		print("子弹碰到了： %s",body.name)
 	emit_signal("hit_tip", tip_msg)
 	queue_free()

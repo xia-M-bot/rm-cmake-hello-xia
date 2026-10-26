@@ -63,6 +63,12 @@ font_names = PackedStringArray("Noto Sans CJK SC")
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_130v7"]
 bg_color = Color(0, 0, 0, 1)
 
+[sub_resource type="SystemFont" id="SystemFont_jlsqs"]
+font_names = PackedStringArray("Noto Sans CJK SC")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q8u5g"]
+bg_color = Color(0, 0, 0, 1)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_nxtc6"]
 size = Vector3(0.1, 3, 3)
 
@@ -228,6 +234,18 @@ theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_130v7")
 text = "基地：--"
 
+[node name="ArmorHpLabel" type="Label" parent="HUD/HudRoot/RightPanel" unique_id=479809254]
+layout_mode = 1
+anchors_preset = -1
+offset_left = -1100.0
+offset_top = 30.0
+offset_right = -1000.0
+offset_bottom = 60.0
+theme_override_fonts/font = SubResource("SystemFont_jlsqs")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_q8u5g")
+text = "装甲：100"
+
 [node name="TopClockLabel" type="Label" parent="HUD/HudRoot" unique_id=336465108]
 layout_mode = 1
 anchors_preset = 5
@@ -297,7 +315,7 @@ script = ExtResource("3_0bbpv")
 script = ExtResource("4_rarhs")
 infantry = NodePath("../Player")
 
-[node name="ArmorFront" type="Area3D" parent="." unique_id=241173239]
+[node name="ArmorFront" type="StaticBody3D" parent="." unique_id=514923095]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6866057, 0, 0)
 collision_layer = 4
 collision_mask = 0
@@ -320,7 +338,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -6.24)
 material_override = SubResource("StandardMaterial3D_nxtc6")
 mesh = SubResource("BoxMesh_c01mt")
 
-[node name="BaseArea" type="Area3D" parent="Base" unique_id=1976078670]
+[node name="BaseArea" type="StaticBody3D" parent="Base" unique_id=1263306746]
 collision_layer = 4
 collision_mask = 0
 
@@ -341,4 +359,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 0.3, 7.5)
 shape = SubResource("BoxShape3D_28xow")
 
 [connection signal="timeout" from="HUD/HudRoot/Timer" to="HUD" method="_on_tip_timer_timeout"]
-[connection signal="body_entered" from="ArmorFront" to="Player" method="_on_armor_front_body_entered"]

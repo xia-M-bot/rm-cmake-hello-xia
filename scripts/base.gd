@@ -9,7 +9,6 @@ var hp: int
 func _ready():
 	hp = max_hp
 	print("基地初始化完成，hp=",hp)
-	$BaseArea.body_entered.connect(_on_body_entered)
 	base_hp_changed.emit(hp)
 
 func _on_body_entered(body):
